@@ -1,5 +1,6 @@
 import subprocess
 import threading
+import time
 # from __future__ import print_function
 # import __future__
 from grooveshark import Client
@@ -34,6 +35,7 @@ class music_player(threading.Thread):
 
     def run(self):
         while True:
+            time.sleep(5)
             for play in self.playlist:
                 for song in client.search(play, type=Client.SONGS):
                     print(song)
@@ -50,3 +52,9 @@ if __name__ == '__main__':
 
     listener.start()
     player.start()
+
+    try:
+        while True:
+            time.sleep(.1)
+    except KeyboardInterrupt:
+        pass
