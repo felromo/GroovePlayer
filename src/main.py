@@ -1,6 +1,4 @@
 import subprocess
-import os
-import sys
 import threading
 # from __future__ import print_function
 # import __future__
@@ -31,12 +29,13 @@ class music_player(threading.Thread):
         self.playlist = playlist
 
     def run(self):
-        for play in self.playlist:
-            for song in client.search(play, type=Client.SONGS):
-                print(song)
-                subprocess.call(['cvlc', "--play-and-exit", song.stream.url])
-                playlist.pop(0)
-                break
+        while True:
+            for play in self.playlist:
+                for song in client.search(play, type=Client.SONGS):
+                    print(song)
+                    subprocess.call(['cvlc', "--play-and-exit", song.stream.url])
+                    playlist.pop(0)
+                    break
 
 
 if __name__ == '__main__':
