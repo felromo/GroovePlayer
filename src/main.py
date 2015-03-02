@@ -9,18 +9,22 @@ client.init()
 
 
 class song_listener(threading.Thread):
+    """
+    Song listener at the moment uses fifo, this functionality should be replaced
+    with sockets instead
+    """
     def __init__(self, playlist, fifo_path):
         threading.Thread.__init__(self)
         self.fifo_path = fifo_path
-        self.daemon = True
 
     def run(self):
-        print "waiting for song"
-        fifo = open(self.fifo_path, 'r')
-        for line in fifo:
-            playlist.append(line)
-            print line + " appended"
-        fifo.close()
+        while True:
+            print "waiting for song"
+            fifo = open(self.fifo_path, 'r')
+            for line in fifo:
+                playlist.append(line)
+                print line + " appended"
+            fifo.close()
 
 
 class music_player(threading.Thread):
